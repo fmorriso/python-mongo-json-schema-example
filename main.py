@@ -68,12 +68,12 @@ def get_schema_for_collection(database_name: str, collection_name: str) -> str:
 
     uri = get_mongodb_atlas_uri()
     schema_generator = SchemaGenerator(uri)
-    schema = schema_generator.get_schemas(
+    schema2 = schema_generator.get_schemas(
         db=database_name,
         collections=[collection_name],
         sample_percent=.99
     )
-    logger.info(f'{type(schema)=}')
+    logger.info(f'{type(schema2)=}')
     # dicitionary:
     # $schema: str = 'http://json-schema.org/schema#
     # type: str = 'object'
@@ -92,7 +92,7 @@ def get_schema_for_collection(database_name: str, collection_name: str) -> str:
     #   name : str
     #   price: str
     logger.info('leaving')
-    return schema
+    return schema2
 
 
 if __name__ == '__main__':
