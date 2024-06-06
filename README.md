@@ -1,6 +1,9 @@
 # python-mongoDB-json-schema
 
+An example of using mongo-jsonschema to reverse engineer a MongoDB collection
 
+## References
+* [Mongo-jsonSchema](https://pypi.org/project/mongo-jsonschema/#description)
 
 ## Getting started
 
