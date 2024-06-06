@@ -8,6 +8,8 @@ from pymongo import MongoClient
 from pyodmongo import DbEngine
 from pyodmongo.queries import eq
 
+from mongo_jsonschema import SchemaGenerator
+
 
 def get_python_version() -> str:
     return f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}'
@@ -58,9 +60,49 @@ def verify_mongodb_database():
     logger.info('leaving')
 
 
+def get_schema_for_collection(database_name: str, collection_name: str) -> str:
+    logger.info('top')
+    client: MongoClient = get_mongodb_client()
+    db = get_mongodb_database(client, database_name)
+    collection = get_mongodb_collection(db, collection_name)
+
+    uri = get_mongodb_atlas_uri()
+    schema_generator = SchemaGenerator(uri)
+    schema = schema_generator.get_schemas(
+        db=database_name,
+        collections=[collection_name],
+        sample_percent=.99
+    )
+    logger.info(f'{type(schema)=}')
+    # dicitionary:
+    # $schema: str = 'http://json-schema.org/schema#
+    # type: str = 'object'
+    # properties : dictionary
+    #   _id: string
+    #   category: string
+    #   id_visible: integer
+    #   image: string
+    #   name: string
+    #  price: integer
+    # required: list
+    #   _id : str
+    #   _category : str
+    #   id_visible : str
+    #   image : str
+    #   name : str
+    #   price: str
+    logger.info('leaving')
+    return schema
+
+
 if __name__ == '__main__':
     start_logging()
     logger.info(f'Python version {get_python_version()}')
     logger.info(f'MongoDB Atlas URI: {get_mongodb_atlas_uri()}')
 
     verify_mongodb_database()
+
+    database_name: str = os.environ.get('mongodb_database_name')
+    collection_name: str = os.environ.get('mongodb_collection_name')
+    json_schema = get_schema_for_collection(database_name, collection_name)
+    logger.info(f'schema: {json_schema}')
