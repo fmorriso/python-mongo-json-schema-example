@@ -5,12 +5,8 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 from loguru import logger
-
-from pymongo import MongoClient
-from pyodmongo import DbEngine
-from pyodmongo.queries import eq
-
 from mongo_jsonschema import SchemaGenerator
+from pymongo import MongoClient
 
 
 def get_python_version() -> str:
@@ -65,7 +61,6 @@ def verify_mongodb_database():
 def get_schema_for_collection(database_name: str, collection_name: str) -> str:
     logger.info('top')
 
-
     client: MongoClient = get_mongodb_client()
     db = get_mongodb_database(client, database_name)
     collection = get_mongodb_collection(db, collection_name)
@@ -88,9 +83,27 @@ def write_schema_to_file(json_data, external_file_name) -> None:
     Path(external_file_name).write_text(json.dumps(json_data, sort_keys=False, indent=4))
 
 
-def convert_schema_dictionary_to_pyodmongo_class(properties: dict):
-    for key,value in properties.items():
-        logger.info(f'{key=} {value=}')
+def convert_schema_dictionary_to_pyodmongo_dictionary(properties: dict) -> dict:
+    retval = {}
+    for column_name, type_dictionary in properties.items():
+        # logger.info(f'{column_name=} {type_dictionary=}')
+        # NOTE: since value is actually a dictionary with a single key, type, unpack it
+        column_type_generic: str = type_dictionary['type']
+        # logger.info(f'{column_name=} {column_type_generic=}')
+        column_type: str = convert_generic_column_type_to_python_type(column_type_generic)
+        logger.info(f'{column_name=} {column_type=}')
+        retval[column_name] = column_type
+    return retval
+
+
+def convert_generic_column_type_to_python_type(generic_type: str) -> str:
+    match generic_type:
+        case 'string':
+            return 'str'
+        case 'integer':
+            return 'int'
+        case _:
+            return 'unknown'
 
 
 if __name__ == '__main__':
@@ -105,7 +118,7 @@ if __name__ == '__main__':
     collection_schema_dictionary = get_schema_for_collection(database_name, collection_name)
     logger.info(f'schema: {collection_schema_dictionary}')
     external_filename: str = f'{collection_name}-schema.json'
-    properties_dictionary:dict  = collection_schema_dictionary[0]['properties']
+    properties_dictionary: dict = collection_schema_dictionary[0]['properties']
     write_schema_to_file(properties_dictionary, external_filename)
 
-    convert_schema_dictionary_to_pyodmongo_class(properties_dictionary)
+    class_dictionary: dict = convert_schema_dictionary_to_pyodmongo_dictionary(properties_dictionary)
