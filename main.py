@@ -64,6 +64,8 @@ def verify_mongodb_database():
 
 def get_schema_for_collection(database_name: str, collection_name: str) -> str:
     logger.info('top')
+
+
     client: MongoClient = get_mongodb_client()
     db = get_mongodb_database(client, database_name)
     collection = get_mongodb_collection(db, collection_name)
@@ -86,6 +88,11 @@ def write_schema_to_file(json_data, external_file_name) -> None:
     Path(external_file_name).write_text(json.dumps(json_data, sort_keys=False, indent=4))
 
 
+def convert_schema_dictionary_to_pyodmongo_class(properties: dict):
+    for key,value in properties.items():
+        logger.info(f'{key=} {value=}')
+
+
 if __name__ == '__main__':
     start_logging()
     logger.info(f'Python version {get_python_version()}')
@@ -100,3 +107,5 @@ if __name__ == '__main__':
     external_filename: str = f'{collection_name}-schema.json'
     properties_dictionary:dict  = collection_schema_dictionary[0]['properties']
     write_schema_to_file(properties_dictionary, external_filename)
+
+    convert_schema_dictionary_to_pyodmongo_class(properties_dictionary)
