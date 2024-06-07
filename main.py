@@ -1,5 +1,7 @@
+import json
 import os
 import sys
+from pathlib import Path
 
 from dotenv import load_dotenv
 from loguru import logger
@@ -68,12 +70,12 @@ def get_schema_for_collection(database_name: str, collection_name: str) -> str:
 
     uri = get_mongodb_atlas_uri()
     schema_generator = SchemaGenerator(uri)
-    schema2 = schema_generator.get_schemas(
+    schema_dictionary = schema_generator.get_schemas(
         db=database_name,
         collections=[collection_name],
         sample_percent=.99
     )
-    logger.info(f'{type(schema2)=}')
+    logger.info(f'{type(schema_dictionary)=}')
     # dicitionary:
     # $schema: str = 'http://json-schema.org/schema#
     # type: str = 'object'
@@ -92,7 +94,13 @@ def get_schema_for_collection(database_name: str, collection_name: str) -> str:
     #   name : str
     #   price: str
     logger.info('leaving')
-    return schema2
+    return schema_dictionary
+
+
+def write_schema_to_file(json_data, external_filen_name) -> None:
+    logger.info(f'{json_data=}')
+    logger.info(f'{Path(external_filen_name)=}')
+    Path(external_filen_name).write_text(json.dumps(json_data, sort_keys=False))
 
 
 if __name__ == '__main__':
@@ -104,5 +112,8 @@ if __name__ == '__main__':
 
     database_name: str = os.environ.get('mongodb_database_name')
     collection_name: str = os.environ.get('mongodb_collection_name')
-    json_schema = get_schema_for_collection(database_name, collection_name)
-    logger.info(f'schema: {json_schema}')
+    collection_schema_dictionary = get_schema_for_collection(database_name, collection_name)
+    logger.info(f'schema: {collection_schema_dictionary}')
+    external_filename: str = f'{collection_name}-schema.json'
+    properties_dictionary:dict  = collection_schema_dictionary[0]['properties']
+    write_schema_to_file(properties_dictionary, external_filename)

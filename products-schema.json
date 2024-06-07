@@ -1,0 +1,1 @@
+{"_id": {"type": "string"}, "name": {"type": "string"}, "price": {"type": "integer"}, "category": {"type": "string"}, "image": {"type": "string"}, "id_visible": {"type": "integer"}}
