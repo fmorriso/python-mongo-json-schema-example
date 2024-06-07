@@ -112,7 +112,7 @@ def convert_generic_column_type_to_python_type(generic_type: str) -> str:
             return 'unknown'
 
 
-def write_pyodmongo_class(class_name: str, fields: dict):
+def write_pyodmongo_class(db_name: str, class_name: str, fields: dict):
     """write a python class file using the supplied class name and dictionary of fields."""
     # NOTE: the class name is expected to have a leading capital letter
     logger.info(f'Begin class {class_name}')
@@ -122,6 +122,7 @@ def write_pyodmongo_class(class_name: str, fields: dict):
     with open(class_filename, 'w') as f:
         f.write(standard_header_stuff)
         f.write(f'class {class_name}(DbModel):\n')
+        f.write(f'{indent}"""Database: {db_name}, collection: {class_name}"""\n')
         for field_name, python_type in fields.items():
             f.write(f'{indent}{field_name}: {python_type}\n')
         f.write(f"{indent}_collection: ClassVar = '{class_name}'\n")
@@ -141,7 +142,7 @@ def verify_conversion_to_python_class():
     logger.info(f'{class_dictionary=}')
 
     class_name: str = os.environ.get('class_name')
-    write_pyodmongo_class(class_name, class_dictionary)
+    write_pyodmongo_class(database_name, class_name, class_dictionary)
 
 
 if __name__ == '__main__':

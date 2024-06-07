@@ -4,6 +4,7 @@ from pyodmongo import DbModel
 
 
 class Products(DbModel):
+    """Database: store, collection: Products"""
     name: str
     price: int
     category: str
