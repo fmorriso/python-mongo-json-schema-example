@@ -127,13 +127,8 @@ def write_pyodmongo_class(class_name: str, fields: dict):
         f.write(f"{indent}_collection: ClassVar = '{class_name}'\n")
 
 
-if __name__ == '__main__':
-    start_logging()
-    logger.info(f'Python version {get_python_version()}')
-    logger.info(f'MongoDB Atlas URI: {get_mongodb_atlas_uri()}')
-
-    verify_mongodb_database()
-
+def verify_conversion_to_python_class():
+    """verify that the logic to convert a collection within a database works properly."""
     database_name: str = os.environ.get('mongodb_database_name')
     collection_name: str = os.environ.get('mongodb_collection_name')
     collection_schema_dictionary = get_schema_for_collection(database_name, collection_name)
@@ -147,3 +142,14 @@ if __name__ == '__main__':
 
     class_name: str = os.environ.get('class_name')
     write_pyodmongo_class(class_name, class_dictionary)
+
+
+if __name__ == '__main__':
+    start_logging()
+    logger.info(f'Python version {get_python_version()}')
+    logger.info(f'MongoDB Atlas URI: {get_mongodb_atlas_uri()}')
+
+    verify_mongodb_database()
+
+    verify_conversion_to_python_class()
+
