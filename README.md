@@ -29,6 +29,22 @@ schema_dictionary:
       name : str
       price: str
 ```
+
+Example output:
+```python
+from typing import ClassVar
+
+from pyodmongo import DbModel
+
+
+class Products(DbModel):
+    name: str
+    price: int
+    category: str
+    image: str
+    id_visible: int
+    _collection: ClassVar = 'Products'
+```
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
