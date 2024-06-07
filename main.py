@@ -76,7 +76,7 @@ def get_schema_for_collection(database_name: str, collection_name: str) -> str:
         sample_percent=.99
     )
     logger.info(f'{type(schema_dictionary)=}')
-    # dicitionary:
+    # schema_dictionary:
     # $schema: str = 'http://json-schema.org/schema#
     # type: str = 'object'
     # properties : dictionary
