@@ -5,6 +5,30 @@ An example of using mongo-jsonschema to reverse engineer a MongoDB collection
 ## References
 * [Mongo-jsonSchema](https://pypi.org/project/mongo-jsonschema/#description)
 
+## Example
+In my particular case, I have a collection called products.
+
+When setting up my ```.env``` file to point to that collection within my MongoDB Atlas URI,
+this program will emit the following json:
+```text
+schema_dictionary:
+    $schema: str = 'http://json-schema.org/schema#
+    type: str = 'object'
+    properties : dictionary
+      _id: string
+      category: string
+      id_visible: integer
+      image: string
+      name: string
+     price: integer
+    required: list
+      _id : str
+      _category : str
+      id_visible : str
+      image : str
+      name : str
+      price: str
+```
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
