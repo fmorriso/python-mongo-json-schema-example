@@ -100,7 +100,7 @@ def get_schema_for_collection(database_name: str, collection_name: str) -> str:
 def write_schema_to_file(json_data, external_filen_name) -> None:
     logger.info(f'{json_data=}')
     logger.info(f'{Path(external_filen_name)=}')
-    Path(external_filen_name).write_text(json.dumps(json_data, sort_keys=False))
+    Path(external_filen_name).write_text(json.dumps(json_data, sort_keys=False, indent=4))
 
 
 if __name__ == '__main__':
