@@ -112,6 +112,10 @@ def convert_generic_column_type_to_python_type(generic_type: str) -> str:
             return 'unknown'
 
 
+def write_pyodmongo_class(class_name: str, fields: dict):
+    logger.info(f'Begin class {class_name}')
+
+
 if __name__ == '__main__':
     start_logging()
     logger.info(f'Python version {get_python_version()}')
@@ -129,3 +133,5 @@ if __name__ == '__main__':
 
     class_dictionary: dict = convert_schema_dictionary_to_pyodmongo_dictionary(properties_dictionary)
     logger.info(f'{class_dictionary=}')
+
+    write_pyodmongo_class(collection_name, class_dictionary)
