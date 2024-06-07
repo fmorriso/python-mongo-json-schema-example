@@ -87,6 +87,12 @@ def convert_schema_dictionary_to_pyodmongo_dictionary(properties: dict) -> dict:
     retval = {}
     for column_name, type_dictionary in properties.items():
         # logger.info(f'{column_name=} {type_dictionary=}')
+
+        # NOTE: since MongoDB automatically accounts for the built-in _id column, don't include it
+        #       in the output dictionary
+        if column_name == '_id':
+            continue
+
         # NOTE: since value is actually a dictionary with a single key, type, unpack it
         column_type_generic: str = type_dictionary['type']
         # logger.info(f'{column_name=} {column_type_generic=}')
@@ -122,3 +128,4 @@ if __name__ == '__main__':
     write_schema_to_file(properties_dictionary, external_filename)
 
     class_dictionary: dict = convert_schema_dictionary_to_pyodmongo_dictionary(properties_dictionary)
+    logger.info(f'{class_dictionary=}')
