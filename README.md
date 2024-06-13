@@ -5,6 +5,13 @@ An example of using mongo-jsonschema to reverse engineer a MongoDB collection
 ## References
 * [Mongo-jsonSchema](https://pypi.org/project/mongo-jsonschema/#description)
 
+## Tools Used
+* Python 3.12.4
+  * pymongo 4.7.3
+  * mogo-jsonschema 0.1.4
+  * loguru 0.7.2
+* VSCode 1.90.0 with latest PyLance extension group (multiple extensions included)
+* PyCharm 2024.1.1 (paid edition)
 ## Example
 In my particular case, I have a collection called products.
 
