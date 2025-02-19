@@ -6,12 +6,19 @@ An example of using mongo-jsonschema to reverse engineer a MongoDB collection
 * [Mongo-jsonSchema](https://pypi.org/project/mongo-jsonschema/#description)
 
 ## Tools Used
-* Python 3.12.4
-  * pymongo 4.7.3
-  * mogo-jsonschema 0.1.4
-  * loguru 0.7.2
-* VSCode 1.90.0 with latest PyLance extension group (multiple extensions included)
-* PyCharm 2024.1.1 (paid edition)
+
+| Tool       |  Version |
+|:-----------|---------:|
+| Python     |   3.13.2 |
+| VSCode     |   1.97.2 |
+| PyCharm    | 2024.3.3 |
+| PyODMongo  |    1.5.1 |
+| Pydantic   |   2.10.6 |
+| Pymongo    |   4.11.1 |
+| loguru     |    0.7.3 |
+| jsonschema |   4.23.0 |
+| Motor      |    3.7.0 |
+
 ## Example
 In my particular case, I have a collection called products.
 

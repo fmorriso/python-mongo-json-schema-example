@@ -1,12 +1,12 @@
 import json
-import os
 import sys
 from pathlib import Path
 
-from dotenv import load_dotenv
 from loguru import logger
-from mongo_jsonschema import SchemaGenerator
+# from mongo_jsonschema import SchemaGenerator
 from pymongo import MongoClient
+
+from program_settings import ProgramSettings
 
 
 def get_python_version() -> str:
@@ -14,11 +14,9 @@ def get_python_version() -> str:
 
 
 def get_mongodb_atlas_uri() -> str:
-    load_dotenv()
-
-    template: str = os.environ.get('mongodb_connection_template')
-    uid: str = os.environ.get('mongodb_uid')
-    pwd: str = os.environ.get('mongodb_pwd')
+    template: str = ProgramSettings.get_setting('MONGODB_CONNECTION_TEMPLATE')
+    uid: str = ProgramSettings.get_setting('MONGODB_UID')
+    pwd: str = ProgramSettings.get_setting('MONGODB_PWD')
 
     return f'mongodb+srv://{uid}:{pwd}@{template}'
 
@@ -46,12 +44,12 @@ def verify_mongodb_database():
     logger.info('top')
     client: MongoClient = get_mongodb_client()
     logger.info(f'{client=}')
-    database_name: str = os.environ.get('mongodb_database_name')
+    database_name: str = ProgramSettings.get_setting('mongodb_database_name')
     print(f'{database_name=}')
     db = get_mongodb_database(client, database_name)
     print(f'{db=}')
 
-    collection_name: str = os.environ.get('mongodb_collection_name')
+    collection_name: str = ProgramSettings.get_setting('mongodb_collection_name')
 
     products_collection = get_mongodb_collection(db, collection_name)
     print(f'{products_collection=}')
@@ -130,8 +128,8 @@ def write_pyodmongo_class(db_name: str, class_name: str, fields: dict):
 
 def verify_conversion_to_python_class():
     """verify that the logic to convert a collection within a database works properly."""
-    database_name: str = os.environ.get('mongodb_database_name')
-    collection_name: str = os.environ.get('mongodb_collection_name')
+    database_name: str = ProgramSettings.get_setting('mongodb_database_name')
+    collection_name: str = ProgramSettings.get_setting('mongodb_collection_name')
     collection_schema_dictionary = get_schema_for_collection(database_name, collection_name)
     logger.info(f'schema: {collection_schema_dictionary}')
     external_filename: str = f'{collection_name}-schema.json'
@@ -141,7 +139,7 @@ def verify_conversion_to_python_class():
     class_dictionary: dict = convert_schema_dictionary_to_pyodmongo_dictionary(properties_dictionary)
     logger.info(f'{class_dictionary=}')
 
-    class_name: str = os.environ.get('class_name')
+    class_name: str = ProgramSettings.get_setting('class_name')
     write_pyodmongo_class(database_name, class_name, class_dictionary)
 
 
