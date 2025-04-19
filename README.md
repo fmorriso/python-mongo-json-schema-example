@@ -9,15 +9,15 @@ An example of using mongo-jsonschema to reverse engineer a MongoDB collection
 
 | Tool       |  Version |
 |:-----------|---------:|
-| Python     |   3.13.2 |
-| VSCode     |   1.97.2 |
-| PyCharm    | 2024.3.3 |
+| Python     |   3.13.3 |
 | PyODMongo  |    1.5.1 |
-| Pydantic   |   2.10.6 |
-| Pymongo    |   4.11.1 |
+| Pydantic   |   2.11.3 |
+| Pymongo    |   4.12.0 |
 | loguru     |    0.7.3 |
 | jsonschema |   4.23.0 |
 | Motor      |    3.7.0 |
+| VSCode     |   1.99.0 |
+| PyCharm    | 2025.1.0 |
 
 ## Example
 In my particular case, I have a collection called products.
