@@ -1,16 +1,22 @@
 import json
 import sys
+from importlib.metadata import version
 from pathlib import Path
 
 from loguru import logger
 # from mongo_jsonschema import SchemaGenerator
 from pymongo import MongoClient
+from sqlalchemy.sql.ddl import SchemaGenerator
 
 from program_settings import ProgramSettings
 
 
 def get_python_version() -> str:
     return f'{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}'
+
+
+def get_package_version(package_name: str) -> str:
+    return version(package_name)
 
 
 def get_mongodb_atlas_uri() -> str:
@@ -27,7 +33,7 @@ def get_mongodb_client() -> MongoClient:
 
 
 def get_mongodb_database(client: MongoClient, database_name: str):
-    return client.get_database(name=database_name)
+    return client.get_database(name = database_name)
 
 
 def get_mongodb_collection(database, collection_name: str):
@@ -37,7 +43,9 @@ def get_mongodb_collection(database, collection_name: str):
 def start_logging():
     log_format: str = '{time} - {name} - {level} - {function} - {message}'
     logger.remove()
-    logger.add('formatted_log.txt', format=log_format, rotation='10 MB', retention='5 days')
+    logger.add('formatted_log.txt', format = log_format, rotation = '10 MB', retention = '5 days')
+    # Add a handler that logs only DEBUG messages to stdout
+    logger.add(sys.stdout, level = 'DEBUG', filter = lambda record: record["level"].name == "DEBUG")
 
 
 def verify_mongodb_database():
@@ -66,9 +74,9 @@ def get_schema_for_collection(database_name: str, collection_name: str) -> str:
     uri = get_mongodb_atlas_uri()
     schema_generator = SchemaGenerator(uri)
     schema_dictionary = schema_generator.get_schemas(
-        db=database_name,
-        collections=[collection_name],
-        sample_percent=.99
+        db = database_name,
+        collections = [collection_name],
+        sample_percent = .99
     )
     logger.info(f'{type(schema_dictionary)=}')
     logger.info('leaving')
@@ -78,7 +86,7 @@ def get_schema_for_collection(database_name: str, collection_name: str) -> str:
 def write_schema_to_file(json_data, external_file_name) -> None:
     logger.info(f'{json_data=}')
     logger.info(f'{Path(external_file_name)=}')
-    Path(external_file_name).write_text(json.dumps(json_data, sort_keys=False, indent=4))
+    Path(external_file_name).write_text(json.dumps(json_data, sort_keys = False, indent = 4))
 
 
 def convert_schema_dictionary_to_pyodmongo_dictionary(properties: dict) -> dict:
@@ -145,10 +153,34 @@ def verify_conversion_to_python_class():
 
 if __name__ == '__main__':
     start_logging()
-    logger.info(f'Python version {get_python_version()}')
+
+    msg = f'Python version {get_python_version()}'
+    logger.info(msg)
+    logger.debug(msg)
+
+    msg = f'loguru version {get_package_version("loguru")}'
+    logger.info(msg)
+    logger.debug(msg)
+
+    msg = f'motor version {get_package_version("motor")}'
+    logger.info(msg)
+    logger.debug(msg)
+
+    msg = f'pydantic version {get_package_version("pydantic")}'
+    logger.info(msg)
+    logger.debug(msg)
+
+    msg = f'PyODMongo version {get_package_version("PyODMongo")}'
+    logger.info(msg)
+    logger.debug(msg)
+
+    msg = f'Pymongo version {get_package_version("Pymongo")}'
+    logger.info(msg)
+    logger.debug(msg)
+
     logger.info(f'MongoDB Atlas URI: {get_mongodb_atlas_uri()}')
+    print(f'pyodmongo version: {get_package_version("pyodmongo")}')
 
     verify_mongodb_database()
 
     verify_conversion_to_python_class()
-
