@@ -24,13 +24,14 @@ An example of using mongo-jsonschema to reverse engineer a MongoDB collection
 
 ## Change History
 
-| Date       | Description          |
-|:-----------|:---------------------|
-| 2025-04    | initial creation     |
-| 2025-05-02 | add requirements.txt |
+| Date       | Description                                  |
+|:-----------|:---------------------------------------------|
+| 2025-04    | initial creation                             |
+| 2025-05-02 | add requirements.txt                         |
+| 2025-05-12 | update requirements, bring in LoggingUtility |
 
 ## Example
-In my particular case, I have a collection called products.
+In my particular case, I have a collection called `products`.
 
 When setting up my ```.env``` file to point to that collection within my MongoDB Atlas URI,
 this program will emit the following json:
