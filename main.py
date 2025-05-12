@@ -178,8 +178,13 @@ if __name__ == '__main__':
     logger.info(msg)
     logger.debug(msg)
 
-    logger.info(f'MongoDB Atlas URI: {get_mongodb_atlas_uri()}')
-    print(f'pyodmongo version: {get_package_version("pyodmongo")}')
+    msg = f'JsonSchema version {get_package_version("jsonschema")}'
+    logger.info(msg)
+    logger.debug(msg)
+
+    msg = f'MongoDB Atlas URI: {get_mongodb_atlas_uri()}'
+    logger.info(msg)
+    print(msg)
 
     verify_mongodb_database()
 

@@ -2,5 +2,5 @@
  loguru~=0.7.3
  motor~=3.7.0
  pydantic~=2.11.3
- PyODMongo~=1.6.5
  Pymongo~=4.12.0
+ PyODMongo~=1.6.5

@@ -10,14 +10,14 @@ An example of using mongo-jsonschema to reverse engineer a MongoDB collection
 | Tool       |  Version |
 |:-----------|---------:|
 | Python     |   3.13.3 |
-| PyODMongo  |    1.5.1 |
+| jsonschema |   4.23.0 |
+| loguru     |    0.7.3 |
+| Motor      |    3.7.0 |
 | Pydantic   |   2.11.3 |
 | Pymongo    |   4.12.0 |
-| loguru     |    0.7.3 |
-| jsonschema |   4.23.0 |
-| Motor      |    3.7.0 |
-| VSCode     |   1.99.0 |
-| PyCharm    | 2025.1.0 |
+| PyODMongo  |    1.5.1 |
+| VSCode     |  1.100.0 |
+| PyCharm    | 2025.1.1 |
 
 ## Change History
 
