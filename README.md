@@ -13,6 +13,7 @@ An example of using mongo-jsonschema to reverse engineer a MongoDB collection
 | jsonschema |   4.23.0 |
 | loguru     |    0.7.3 |
 | Motor      |    3.7.0 |
+| PathLib    |    1.0.1 |
 | Pydantic   |   2.11.3 |
 | Pymongo    |   4.12.0 |
 | PyODMongo  |    1.5.1 |
