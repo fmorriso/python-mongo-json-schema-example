@@ -3,11 +3,11 @@ import sys
 from importlib.metadata import version
 from pathlib import Path
 
-from loguru import logger
 # from mongo_jsonschema import SchemaGenerator
 from pymongo import MongoClient
 from sqlalchemy.sql.ddl import SchemaGenerator
 
+from logging_utility import LoggingUtility
 from program_settings import ProgramSettings
 
 
@@ -38,14 +38,6 @@ def get_mongodb_database(client: MongoClient, database_name: str):
 
 def get_mongodb_collection(database, collection_name: str):
     return database.get_collection(collection_name)
-
-
-def start_logging():
-    log_format: str = '{time} - {name} - {level} - {function} - {message}'
-    logger.remove()
-    logger.add('formatted_log.txt', format = log_format, rotation = '10 MB', retention = '5 days')
-    # Add a handler that logs only DEBUG messages to stdout
-    logger.add(sys.stdout, level = 'DEBUG', filter = lambda record: record["level"].name == "DEBUG")
 
 
 def verify_mongodb_database():
@@ -151,10 +143,13 @@ def verify_conversion_to_python_class():
     write_pyodmongo_class(database_name, class_name, class_dictionary)
 
 
+logger = LoggingUtility.start_logging()
 if __name__ == '__main__':
-    start_logging()
-
     msg = f'Python version {get_python_version()}'
+    logger.info(msg)
+    logger.debug(msg)
+
+    msg = f'JsonSchema version {get_package_version("jsonschema")}'
     logger.info(msg)
     logger.debug(msg)
 
@@ -163,6 +158,10 @@ if __name__ == '__main__':
     logger.debug(msg)
 
     msg = f'motor version {get_package_version("motor")}'
+    logger.info(msg)
+    logger.debug(msg)
+
+    msg = f'PathLib version {get_package_version("PathLib")}'
     logger.info(msg)
     logger.debug(msg)
 
@@ -175,10 +174,6 @@ if __name__ == '__main__':
     logger.debug(msg)
 
     msg = f'Pymongo version {get_package_version("Pymongo")}'
-    logger.info(msg)
-    logger.debug(msg)
-
-    msg = f'JsonSchema version {get_package_version("jsonschema")}'
     logger.info(msg)
     logger.debug(msg)
 
