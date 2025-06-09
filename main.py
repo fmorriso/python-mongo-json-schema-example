@@ -155,6 +155,9 @@ if __name__ == '__main__':
     msg = f'Python version {get_python_version()}'
     LU.log_info_and_debug(msg)
 
+    msg = f'SqlAlchemy version {get_package_version("sqlalchemy")}'
+    LU.log_info_and_debug(msg)
+
     msg = f'JsonSchema version {get_package_version("jsonschema")}'
     LU.log_info_and_debug(msg)
 

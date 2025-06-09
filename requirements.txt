@@ -5,3 +5,4 @@
  pydantic~=2.11.3
  Pymongo~=4.13
  PyODMongo~=1.6.5
+ SqlAlchemy~=2.0.41

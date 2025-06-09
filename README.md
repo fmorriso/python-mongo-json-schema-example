@@ -17,6 +17,7 @@ An example of using mongo-jsonschema to reverse engineer a MongoDB collection
 | Pydantic   |   2.11.5 |
 | Pymongo    |   4.13.0 |
 | PyODMongo  |    1.6.5 |
+| SqlAlchemy |   2.0.41 |
 | VSCode     |  1.100.3 |
 | PyCharm    | 2025.1.1 |
 
