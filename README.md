@@ -10,17 +10,15 @@ An example of using mongo-jsonschema to reverse engineer a MongoDB collection
 | Tool       |  Version |
 |:-----------|---------:|
 | Python     |   3.13.3 |
-| jsonschema |   4.23.0 |
+| jsonschema |   4.24.0 |
 | loguru     |    0.7.3 |
-| Motor      |    3.7.0 |
+| Motor      |    3.7.1 |
 | PathLib    |    1.0.1 |
-| Pydantic   |   2.11.3 |
-| Pymongo    |   4.12.0 |
-| PyODMongo  |    1.5.1 |
-| VSCode     |  1.100.0 |
+| Pydantic   |   2.11.5 |
+| Pymongo    |   4.13.0 |
+| PyODMongo  |    1.6.5 |
+| VSCode     |  1.100.3 |
 | PyCharm    | 2025.1.1 |
-
-## Change History
 
 ## Change History
 
@@ -29,6 +27,7 @@ An example of using mongo-jsonschema to reverse engineer a MongoDB collection
 | 2025-04    | initial creation                             |
 | 2025-05-02 | add requirements.txt                         |
 | 2025-05-12 | update requirements, bring in LoggingUtility |
+| 2025-06-09 | upgrade LoggingUtility and usages            |
 
 ## Example
 In my particular case, I have a collection called `products`.
